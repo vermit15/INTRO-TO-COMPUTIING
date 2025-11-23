@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment Handler - Home</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(270deg, #808080, #000000);
+      background-size: 800% 800%;
+      animation: gradientMove 15s ease infinite;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .home-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+      text-align: center;
+      color: #fff;
+      width: 400px;
+      animation: fadeIn 1.2s ease;
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .home-box h1 {
+      margin-bottom: 30px;
+    }
+    .home-box button {
+      width: 80%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #808080, #000000);
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .home-box button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00c3ff;
+    }
+    .home-box ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+      text-align: left;
+    }
+    .home-box ul li {
+      margin-bottom: 10px;
+    }
+    .home-box ul li a {
+      color: #00c3ff;
+      text-decoration: none;
+    }
+    .home-box ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Invisible ad overlay */
+    .ad-overlay {
+      display: none; /* initially hidden */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent; /* invisible */
+      z-index: 999; /* above everything */
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="home-box">
+    <h1>Welcome to Assignment Handler</h1>
+    <a href="Project.html"><button>View Assignments</button></a>
+
+    <h2>Quick Links</h2>
+    <ul>
+      <li><a href="https://classroom.google.com" target="_blank">Google Classroom</a></li>
+      <li><a href="https://www.messenger.com" target="_blank">Messenger</a></li>
+      <li><a href="https://meet.google.com" target="_blank">Google Meet</a></li>
+      <li><a href="https://mail.google.com" target="_blank">Gmail</a></li>
+      <li><a href="https://drive.google.com" target="_blank">Google Drive</a></li>
+    </ul>
+  </div>
+
+  <!-- Invisible ad overlay -->
+  <div class="ad-overlay" id="adOverlay"></div>
+
+  <script>
+    // Show the ad overlay after 2 seconds
+    setTimeout(() => {
+      const overlay = document.getElementById('adOverlay');
+      overlay.style.display = 'block';
+    }, 2000);
+
+    // Redirect when overlay is clicked
+    document.getElementById('adOverlay').addEventListener('click', () => {
+      window.location.href = "https://bit.ly/4pvUKDy"; // Replace with your link
+    });
+  </script>
+</body>
+</html>

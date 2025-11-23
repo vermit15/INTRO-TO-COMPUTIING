@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment Handler</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: auto;
+      background: linear-gradient(270deg, #808080, #000000);
+      background-size: 800% 800%;
+      animation: gradientMove 15s ease infinite;
+      padding: 20px 0;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .project-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+      text-align: center;
+      color: #fff;
+      width: 90%;
+      max-width: 700px;
+      animation: fadeIn 1.2s ease;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .project-box h1, .project-box h2 {
+      margin-bottom: 20px;
+    }
+    .project-box select, .project-box input {
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      margin-bottom: 15px;
+      width: 80%;
+    }
+    .project-box button {
+      padding: 10px 20px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #808080, #000000);
+      color: #fff;
+      transition: 0.3s;
+    }
+    .project-box button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00c3ff;
+    }
+    table {
+      margin: 20px auto 0 auto;
+      border-collapse: collapse;
+      width: 95%;
+      background-color: rgba(255,255,255,0.1);
+    }
+    table th, table td {
+      border: 1px solid #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    table th {
+      background-color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+  <div class="project-box">
+    <a href="Homepage.html"><button style="background-color:#f44336;">Back to Homepage</button></a>
+
+    <h1>Assignment Handler</h1>
+    <h2>Add Assignment</h2>
+
+    <p>
+      Subject:
+      <select id="subject">
+        <option value="">-- Select Subject --</option>
+        <option>Computer Programming 1</option>
+        <option>Intro to Computing</option>
+        <option>Kontekstwalisadong Komunikasyon sa Filipino</option>
+        <option>Discrete Structures</option>
+        <option>FITT</option>
+        <option>Purposive Communication</option>
+        <option>Ethics</option>
+        <option>CVSU 101</option>
+      </select>
+      <br>
+
+      Assignment: <input id="task" type="text"><br>
+      Due Date: <input id="due" type="date"><br>
+      <button onclick="addAssignment()">Add Assignment</button>
+    </p>
+
+    <h2>Your Assignments</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Assignment</th>
+          <th>Due Date</th>
+          <th>Done</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="assignmentTable">
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Load assignments from localStorage on page load
+    window.onload = function() {
+      loadAssignments();
+    };
+
+    function loadAssignments() {
+      const assignments = JSON.parse(localStorage.getItem("assignments") || "[]");
+      const table = document.getElementById("assignmentTable");
+      table.innerHTML = ""; // clear current table
+
+      assignments.forEach((a, index) => {
+        const row = table.insertRow();
+        row.insertCell(0).innerText = a.subject;
+        row.insertCell(1).innerText = a.task;
+        row.insertCell(2).innerText = a.due;
+        row.insertCell(3).innerHTML = "<input type='checkbox'>";
+
+        // Delete button
+        const deleteCell = row.insertCell(4);
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "Delete";
+        deleteBtn.style.backgroundColor = "#f44336";
+        deleteBtn.style.color = "#fff";
+        deleteBtn.style.border = "none";
+        deleteBtn.style.borderRadius = "5px";
+        deleteBtn.style.padding = "5px 10px";
+        deleteBtn.style.cursor = "pointer";
+
+        deleteBtn.onclick = function() {
+          assignments.splice(index, 1);
+          localStorage.setItem("assignments", JSON.stringify(assignments));
+          loadAssignments(); // reload table
+        };
+
+        deleteCell.appendChild(deleteBtn);
+      });
+    }
+
+    function addAssignment() {
+      const subject = document.getElementById("subject").value;
+      const task = document.getElementById("task").value;
+      const due = document.getElementById("due").value;
+
+      if (!subject || !task || !due) {
+        alert("Please complete all fields.");
+        return;
+      }
+
+      const assignments = JSON.parse(localStorage.getItem("assignments") || "[]");
+      assignments.push({subject, task, due});
+      localStorage.setItem("assignments", JSON.stringify(assignments));
+
+      document.getElementById("subject").value = "";
+      document.getElementById("task").value = "";
+      document.getElementById("due").value = "";
+
+      loadAssignments();
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Assignment Handler</title>
+</head>
+<body>
+
+  <a href="Homepage.html">
+    <button style="padding: 8px 16px; font-size: 14px; margin-bottom: 15px;">
+      Back to Homepage
+    </button>
+  </a>
+
+  <h1>Assignment Handler</h1>
+
+  <h2>Add Assignment</h2>
+
+  <form>
+    <p>
+      Subject:
+      <select>
+        <option>-- Select Subject --</option>
+        <option>Computer Programming 1</option>
+        <option>Intro to Computing</option>
+        <option>Kontekstwalisadong Komunikasyon sa Filipino</option>
+        <option>Discrete Structures</option>
+        <option>FITT</option>
+        <option>Purposive Communication</option>
+        <option>Ethics</option>
+        <option>CVSU 101</option>
+      </select>
+      <br><br>
+
+      Assignment: <input type="text"><br><br>
+
+      Due Date: <input type="date"><br><br>
+
+      <button type="submit">Add</button>
+    </p>
+  </form>
+
+  <h2>Your Assignments</h2>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Assignment</th>
+        <th>Due Date</th>
+        <th>Done</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Subject</td>
+        <td>Assignment</td>
+        <td>2025-12-01</td>
+        <td><input type="checkbox"></td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>
+-->
